@@ -1,0 +1,32 @@
+@import "tailwindcss";
+
+@theme {
+  --color-backgroundColor: #282a36;
+
+  --color-windowColor: #21222c;
+  --color-windowHoverColor: #33343b;
+
+  --color-searchBarColor: #2c2d37;
+  --color-searchBarHoverColor: #32333d;
+  --color-searchBarBorderColor: #55565b;
+
+  --color-sideBarBgColor: #343746;
+  --color-sideBarHoverColor: #3c3d51;
+  --color-sideBarFocusColor: #9e5b8b;
+  --color-sideBarItemColor: #5f6b98;
+
+  --color-explorerBgColor: #21222c;
+  --color-explorerHoverColor: #33343b;
+  --color-explorerHoverItemColor: #313341;
+  --color-explorerFolderHighlightColor: #282a36;
+
+  --color-tabBarColor: #191a21;
+  --color-tabButtonColor: #21222c;
+  --color-tabButtonSelectedColor: #282a36;
+  --color-tabButtonFocusedColor: #282a36;
+  
+  --color-reactIconColor: #58c4dc;
+  --color-typeScriptIconColor: #3178c6;
+  --color-cssIconColor: #89ddff;
+  --color-htmlIconColor: #e44d26;
+}
