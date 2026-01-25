@@ -2,7 +2,7 @@ import React from 'react'
 
 const TechStack = () => {
   return (
-    <div>
+    <div className='bg-backgroundColor w-full h-full'>
       
     </div>
   )

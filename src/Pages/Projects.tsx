@@ -1,8 +1,10 @@
-import React from 'react'
 
 const Projects = () => {
   return (
-    <div>
+    <div className="bg-backgroundColor w-full h-full">
+      <div className="flex">
+        <h1></h1>
+      </div>
       
     </div>
   )

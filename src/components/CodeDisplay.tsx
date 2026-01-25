@@ -3,14 +3,12 @@ import {
   CodeBlock,
   CodeHeader,
 } from "@/components/animate-ui/components/animate/code";
-import { useState } from "react";
 import { FaReact } from "react-icons/fa";
 
 const CodeDisplay = () => {
-  const [key, setKey] = useState(0);
   const myCode = `const HomePage = () => {
 
-  const [isLoaded, setIsLoaded] = useState(true);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const developerInfo = {
     name: 'Cedrick Lemuel F. Cabansag',
@@ -33,14 +31,15 @@ const CodeDisplay = () => {
     </main>
   );
 };
+
 export default HomePage;`;
 
   return (
     <>
-      <Code className="w-xl border-gray-600" code={myCode}>
+      <Code className="w-xl border-borderColor" code={myCode}>
         <CodeHeader
           icon={FaReact}
-          className="bg-windowColor text-white border-gray-600"
+          className="bg-windowColor text-white border-borderColor"
         >
           Home.tsx
         </CodeHeader>
@@ -51,9 +50,6 @@ export default HomePage;`;
           lang="tsx"
           cursor={true}
           theme="dark"
-          onDone={() => {
-            setTimeout(() => setKey((prev) => prev + 1), 60000);
-          }}
         ></CodeBlock>
       </Code>
     </>

@@ -8,30 +8,35 @@ const TabBar = () => {
     <div className="bg-tabBarColor flex w-full h-10 justify-between">
       <div className="flex gap-px">
         <TabButton
+          to="/"
           icon={FaReact}
           iconColor="text-reactIconColor"
           fileName="Home.tsx"
         />
 
         <TabButton
-          icon={FaReact}
-          iconColor="text-reactIconColor"
-          fileName="TechStack.tsx"
-        />
-
-        <TabButton
+          to="/projects"
           icon={BiLogoTypescript}
           iconColor="text-typeScriptIconColor"
           fileName="projects.ts"
         />
 
         <TabButton
+          to="/techstack"
+          icon={FaReact}
+          iconColor="text-reactIconColor"
+          fileName="TechStack.tsx"
+        />
+
+        <TabButton
           icon={FaCss3}
+          to="/contacts"
           iconColor="text-cssIconColor"
           fileName="contacts.css"
         />
 
         <TabButton
+          to="/about"
           icon={FaHtml5}
           iconColor="text-htmlIconColor"
           fileName="about.html"

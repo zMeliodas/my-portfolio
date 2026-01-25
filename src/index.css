@@ -35,6 +35,7 @@
   --color-htmlIconColor: #e44d26;
 
   --color-draculaPink: #9e5b8b;
+  --color-borderColor: #383942;
 }
 
 @theme inline {

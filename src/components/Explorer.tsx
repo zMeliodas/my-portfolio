@@ -24,30 +24,35 @@ const Explorer = () => {
 
       <div className="flex flex-col items-center bg-explorerBgColor w-full">
         <ExplorerButton
+          to="/"
           icon={FaReact}
           iconColor="text-reactIconColor"
           fileName="Home.tsx"
         />
 
         <ExplorerButton
-          icon={FaReact}
-          iconColor="text-reactIconColor"
-          fileName="TechStack.tsx"
-        />
-
-        <ExplorerButton
+          to="/projects"
           icon={BiLogoTypescript}
           iconColor="text-typeScriptIconColor"
           fileName="projects.ts"
         />
 
         <ExplorerButton
+          to="/techstack"
+          icon={FaReact}
+          iconColor="text-reactIconColor"
+          fileName="TechStack.tsx"
+        />
+
+        <ExplorerButton
+          to="/contacts"
           icon={FaCss3}
           iconColor="text-cssIconColor"
           fileName="contacts.css"
         />
 
         <ExplorerButton
+          to="/about"
           icon={FaHtml5}
           iconColor="text-htmlIconColor"
           fileName="about.html"

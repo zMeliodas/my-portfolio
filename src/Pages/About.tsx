@@ -1,8 +1,7 @@
-import React from 'react'
 
 const About = () => {
   return (
-    <div>
+    <div className="bg-backgroundColor w-full h-full">
       
     </div>
   )
