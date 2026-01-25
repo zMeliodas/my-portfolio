@@ -1,8 +1,6 @@
 import TabButton from "./TabButton";
-import { FaReact } from "react-icons/fa";
+import { FaCss3, FaHtml5, FaReact } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
-import { FaCss3 } from "react-icons/fa";
-import { FaHtml5 } from "react-icons/fa";
 import { BsLayoutSplit } from "react-icons/bs";
 
 const TabBar = () => {
@@ -12,7 +10,7 @@ const TabBar = () => {
         <TabButton
           icon={FaReact}
           iconColor="text-reactIconColor"
-          fileName="Projects.tsx"
+          fileName="Home.tsx"
         />
 
         <TabButton

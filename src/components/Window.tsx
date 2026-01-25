@@ -1,20 +1,19 @@
 import logo from "../assets/vscodelogo.png";
-import { FaArrowLeft } from "react-icons/fa6";
-import { FaArrowRight } from "react-icons/fa6";
-import { IoSearch } from "react-icons/io5";
-import { VscLayout } from "react-icons/vsc";
-import { VscLayoutSidebarLeft } from "react-icons/vsc";
-import { VscLayoutPanel } from "react-icons/vsc";
-import { VscLayoutSidebarRightOff } from "react-icons/vsc";
-import { VscChromeMinimize } from "react-icons/vsc";
-import { VscChromeRestore } from "react-icons/vsc";
-import { VscChromeClose } from "react-icons/vsc";
-import { VscRemote } from "react-icons/vsc";
-import { VscError } from "react-icons/vsc";
-import { VscWarning } from "react-icons/vsc";
+import {
+  VscError,
+  VscWarning,
+  VscRemote,
+  VscChromeClose,
+  VscChromeRestore,
+  VscChromeMinimize,
+  VscLayoutPanel,
+  VscLayoutSidebarLeft,
+  VscLayout,
+  VscLayoutSidebarRightOff,
+} from "react-icons/vsc";
+import { FaArrowLeft, FaArrowRight, FaCheck } from "react-icons/fa6";
+import { IoSearch, IoNotificationsOutline } from "react-icons/io5";
 import { BsGlobe } from "react-icons/bs";
-import { IoNotificationsOutline } from "react-icons/io5";
-import { FaCheck } from "react-icons/fa6";
 import { PiBracketsCurly } from "react-icons/pi";
 
 const Window = () => {

@@ -1,9 +1,10 @@
-import { VscFiles } from "react-icons/vsc";
-import { IoIosSearch } from "react-icons/io";
-import { VscSourceControl } from "react-icons/vsc";
-import { VscDebugAlt } from "react-icons/vsc";
-import { VscExtensions } from "react-icons/vsc";
-import { IoMdSettings } from "react-icons/io";
+import {
+  VscSourceControl,
+  VscFiles,
+  VscDebugAlt,
+  VscExtensions,
+} from "react-icons/vsc";
+import { IoMdSettings, IoIosSearch } from "react-icons/io";
 import { CgProfile } from "react-icons/cg";
 
 const Sidebar = () => {
