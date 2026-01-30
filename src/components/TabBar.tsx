@@ -2,45 +2,62 @@ import TabButton from "./TabButton";
 import { FaCss3, FaHtml5, FaReact } from "react-icons/fa";
 import { BiLogoTypescript } from "react-icons/bi";
 import { BsLayoutSplit } from "react-icons/bs";
+import type { ButtonTypes } from "@/types";
+import { useTab } from "@/TabProvider";
 
 const TabBar = () => {
+  const { selectedTab, setSelectedTab } = useTab();
+  const tabs: ButtonTypes[] = [
+    {
+      key: "/",
+      tab: "home",
+      icon: FaReact,
+      iconColor: "text-reactIconColor",
+      fileName: "Home.tsx",
+    },
+    {
+      key: "/projects",
+      tab: "projects",
+      icon: BiLogoTypescript,
+      iconColor: "text-typeScriptIconColor",
+      fileName: "projects.ts",
+    },
+    {
+      key: "/techstack",
+      tab: "techstack",
+      icon: FaReact,
+      iconColor: "text-reactIconColor",
+      fileName: "Techstack.tsx",
+    },
+    {
+      key: "/contacts",
+      tab: "contacts",
+      icon: FaCss3,
+      iconColor: "text-cssIconColor",
+      fileName: "Contacts.css",
+    },
+    {
+      key: "/about",
+      tab: "about",
+      icon: FaHtml5,
+      iconColor: "text-htmlIconColor",
+      fileName: "about.html",
+    },
+  ];
+
   return (
     <div className="bg-tabBarColor flex w-full h-10 justify-between">
       <div className="flex gap-px">
-        <TabButton
-          to="/"
-          icon={FaReact}
-          iconColor="text-reactIconColor"
-          fileName="Home.tsx"
-        />
-
-        <TabButton
-          to="/projects"
-          icon={BiLogoTypescript}
-          iconColor="text-typeScriptIconColor"
-          fileName="projects.ts"
-        />
-
-        <TabButton
-          to="/techstack"
-          icon={FaReact}
-          iconColor="text-reactIconColor"
-          fileName="TechStack.tsx"
-        />
-
-        <TabButton
-          icon={FaCss3}
-          to="/contacts"
-          iconColor="text-cssIconColor"
-          fileName="contacts.css"
-        />
-
-        <TabButton
-          to="/about"
-          icon={FaHtml5}
-          iconColor="text-htmlIconColor"
-          fileName="about.html"
-        />
+        {tabs.map((tab) => (
+          <TabButton
+            to={tab.key}
+            icon={tab.icon}
+            iconColor={tab.iconColor}
+            fileName={tab.fileName}
+            onClick={() => setSelectedTab(tab.tab)}
+            isSelected={selectedTab === tab.tab}
+          />
+        ))}
       </div>
 
       <div className="flex items-center gap-2">

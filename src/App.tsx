@@ -13,14 +13,13 @@ const App = () => {
   return (
     <>
       <Window />
-      <div className="flex">
-        <Router>
+      <Router>
+        <div className="flex">
           <Sidebar />
           <Explorer />
 
           <div className="flex flex-col w-full">
             <TabBar />
-
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<Projects />} />
@@ -29,8 +28,8 @@ const App = () => {
               <Route path="/contacts" element={<Contacts />} />
             </Routes>
           </div>
-        </Router>
-      </div>
+        </div>
+      </Router>
     </>
   );
 };

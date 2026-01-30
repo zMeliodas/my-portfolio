@@ -10,21 +10,21 @@ const CodeDisplay = () => {
 
   const [isLoaded, setIsLoaded] = useState(false);
 
-  const developerInfo = {
+  const developer = {
     name: 'Cedrick Lemuel F. Cabansag',
     role: 'Full Stack Developer',
     bio: 'Building modern web experiences'
   };
 
   useEffect(() => {
-    document.title = \`\${developerInfo.name}\`\;
+    document.title = \`\${developer.name}\`\;
     setIsLoaded(true);
-  }, []);
+  }, [developer.name]);
 
   return (
     <main className="hero-container">
-      <h1>{developerInfo.name}</h1>
-      <p>{developerInfo.role}</p>
+      <h1>{developer.name}</h1>
+      <p>{developer.role}</p>
       <div className="cta">
         <Link href="/projects">View Projects</Link>
       </div>
