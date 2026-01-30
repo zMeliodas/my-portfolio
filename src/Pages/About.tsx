@@ -11,7 +11,7 @@ const About = () => {
         <h1 className="text-5xl font-mono text-draculaPink">
           Cedrick Lemuel Cabansag
         </h1>
-        <p className="text-2xl font-mono text-white">Software Engineer</p>
+        <p className="text-3xl font-mono text-white">Software Engineer</p>
 
         <div className="flex flex-col justify-center content-center">
           <p className="text-2xl font-mono mt-8 text-white w-full">

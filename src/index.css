@@ -33,9 +33,14 @@
   --color-typeScriptIconColor: #3178c6;
   --color-cssIconColor: #89ddff;
   --color-htmlIconColor: #e44d26;
+  --color-postgreSQLIconColor: #336791;
+  --color-tailwindIconColor: #07b6d5;
+  --color-supabaseIconColor: #3ecf8e;
+  --color-javascriptIconColor: #f7e01d;
 
   --color-draculaPink: #9e5b8b;
   --color-borderColor: #383942;
+  --color-cardColor: #21222c;
 }
 
 @theme inline {

@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import { type IconType } from "react-icons";
 
 export interface ButtonProps {
@@ -22,4 +23,12 @@ export interface ButtonTypes {
 export interface SidebarButtonTypes {
   icon: IconType;
   isBottom: boolean;
+}
+
+export interface CardTypes {
+  icon?: ReactNode;
+  imageSrc?: string;
+  link?: string;
+  title: string;
+  description: string;
 }
