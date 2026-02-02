@@ -11,22 +11,27 @@ import type { SidebarButtonTypes } from "@/types";
 
 const buttons: SidebarButtonTypes[] = [
   {
+    id: "files",
     icon: VscFiles,
     isBottom: false,
   },
   {
+    id: "search",
     icon: IoIosSearch,
     isBottom: false,
   },
   {
+    id: "source-control",
     icon: VscSourceControl,
     isBottom: false,
   },
   {
+    id: "debug",
     icon: VscDebugAlt,
     isBottom: false,
   },
   {
+    id: "extensions",
     icon: VscExtensions,
     isBottom: false,
   },
@@ -34,16 +39,20 @@ const buttons: SidebarButtonTypes[] = [
 
 const Sidebar = () => {
   return (
-    <div className="bg-sideBarBgColor w-14 h-215 flex flex-col items-center justify-between">
+    <div className="flex flex-col bg-sideBarBgColor w-14 h-full items-center justify-between">
       <div className="flex flex-col items-center gap-2">
         {buttons.map((button) => (
-          <SidebarButton icon={button.icon} isBottom={button.isBottom} />
+          <SidebarButton
+            key={button.id}
+            icon={button.icon}
+            isBottom={button.isBottom}
+          />
         ))}
       </div>
 
       <div className="flex flex-col-reverse items-center gap-2">
-        <SidebarButton icon={IoMdSettings} isBottom={true} />
-        <SidebarButton icon={CgProfile} isBottom={true} />
+        <SidebarButton key="settings" icon={IoMdSettings} isBottom={true} />
+        <SidebarButton key="profile" icon={CgProfile} isBottom={true} />
       </div>
     </div>
   );

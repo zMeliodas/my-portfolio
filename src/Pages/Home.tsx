@@ -5,10 +5,13 @@ import { Link } from "react-router-dom";
 const Home = () => {
   return (
     <div className="flex content-center justify-center bg-backgroundColor w-full h-full">
-      <div className="flex space-x-18 items-center">
-        <CodeDisplay />
-        <div className="flex flex-col w-lg gap-4">
-          <div className="flex-col">
+      <div className="flex flex-col w-full h-full justify-center items-center overflow-y-auto custom-scroll md:flex-row gap-12">
+        <div className="flex items-center min-w-lg max-w-lg border-2 border-red-300">
+          <CodeDisplay />
+        </div>
+
+        <div className="flex flex-col w-lg gap-4 justify-center items-center md:justify-normal md:items-baseline">
+          <div className="flex flex-row md:flex-col gap-2">
             <h1 className="font-bold text-white text-6xl">Cedrick</h1>
             <h1 className="font-bold text-draculaPink text-6xl">Cabansag</h1>
           </div>

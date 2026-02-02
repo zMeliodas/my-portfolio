@@ -47,7 +47,7 @@ const TabBar = () => {
 
   return (
     <div className="bg-tabBarColor flex w-full h-10 justify-between">
-      <div className="flex gap-px">
+      <div className="flex max-w-8xl gap-px">
         {tabs.map((tab) => (
           <TabButton
             to={tab.key}

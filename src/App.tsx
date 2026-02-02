@@ -1,4 +1,5 @@
-import Window from "./components/Window";
+import TitleBar from "./components/TitleBar";
+import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import Explorer from "./components/Explorer";
 import TabBar from "./components/TabBar";
@@ -11,26 +12,34 @@ import TechStack from "./Pages/TechStack";
 
 const App = () => {
   return (
-    <>
-      <Window />
-      <Router>
-        <div className="flex">
+    <Router>
+      <div className="h-screen flex flex-col overflow-hidden">
+        {/* Title Bar - Fixed height */}
+        <TitleBar />
+
+        {/* Main Content Area - Takes remaining space */}
+        <div className="flex flex-1 overflow-hidden">
+          {/* Sidebar - Takes full height of this container */}
           <Sidebar />
           <Explorer />
 
-          <div className="flex flex-col w-full">
-            <TabBar />
+          {/* Main content area */}
+          <main className="flex-1 bg-editorColor overflow-auto">
+            {/* Your routes/pages go here */}
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/projects" element={<Projects />} />
               <Route path="/about" element={<About />} />
-              <Route path="/techstack" element={<TechStack />} />
               <Route path="/contacts" element={<Contacts />} />
+              <Route path="/techstack" element={<TechStack />} />
             </Routes>
-          </div>
+          </main>
         </div>
-      </Router>
-    </>
+
+        {/* Footer - Fixed height */}
+        <Footer />
+      </div>
+    </Router>
   );
 };
 
