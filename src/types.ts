@@ -2,12 +2,12 @@ import type { ReactNode } from "react";
 import { type IconType } from "react-icons";
 
 export interface ButtonProps {
-  icon?: IconType;
-  iconColor?: string;
-  fileName?: string;
-  to?: string;
-  onClick?: () => void;
-  isSelected?: boolean;
+  icon: IconType;
+  iconColor: string;
+  fileName: string;
+  to: string;
+  onClick: () => void;
+  isSelected: boolean;
 }
 
 export type TabType = "home" | "projects" | "techstack" | "contacts" | "about";
@@ -21,7 +21,6 @@ export interface ButtonTypes {
 }
 
 export interface SidebarButtonTypes {
-  id?: string;
   icon: IconType;
   isBottom: boolean;
 }

@@ -36,10 +36,7 @@ export default HomePage;`;
 
   return (
     <>
-      <Code
-        className="hidden sm:block w-full border-borderColor"
-        code={myCode}
-      >
+      <Code className="w-xl border-borderColor" code={myCode}>
         <CodeHeader
           icon={FaReact}
           className="bg-windowColor text-white border-borderColor"
