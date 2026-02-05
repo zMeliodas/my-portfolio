@@ -46,10 +46,11 @@ const TabBar = () => {
   ];
 
   return (
-    <div className="bg-tabBarColor flex w-full h-10 justify-between">
+    <div className="bg-tabBarColor flex w-full h-10 justify-between overflow-scroll no-scrollbar">
       <div className="flex gap-px">
         {tabs.map((tab) => (
           <TabButton
+            key={tab.key}
             to={tab.key}
             icon={tab.icon}
             iconColor={tab.iconColor}
@@ -60,7 +61,7 @@ const TabBar = () => {
         ))}
       </div>
 
-      <div className="flex items-center gap-2">
+      <div className="hidden lg:flex items-center gap-2">
         <button className="hover:bg-explorerHoverColor p-1 rounded-md">
           <BsLayoutSplit className="text-white" />
         </button>

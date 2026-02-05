@@ -37,18 +37,18 @@ const Projects = () => {
   ];
 
   return (
-    <div className="bg-backgroundColor w-full max-h-210 pb-16 overflow-auto custom-scroll">
-      <div className="flex flex-col max-w-4xl pt-8 px-24 gap-4">
-        <h1 className="text-draculaPink text-4xl font-medium font-mono">
+    <div className="bg-backgroundColor w-full h-full">
+      <div className="flex flex-col pt-8 px-8 2xl:px-24 gap-4">
+        <h1 className="text-draculaPink text-4xl font-medium font-mono lg:text-4xl">
           My Projects
         </h1>
-        <p className="text-white text-xl font-medium font-mono">
+        <p className="text-white font-medium font-mono sm:text-sm xl:text-xl">
           Here's a collection of my recent work. These projects showcase my
           skills in web development, design, and problem-solving.
         </p>
       </div>
 
-      <div className="flex flex-wrap mt-8 gap-6 w-full px-24">
+      <div className="flex flex-wrap mt-8 gap-6 w-full px-8 pb-8 xl:px-24">
         {cards.map((card) => (
           <Card
             imageSrc={card.imageSrc}

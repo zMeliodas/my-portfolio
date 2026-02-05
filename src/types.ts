@@ -21,6 +21,7 @@ export interface ButtonTypes {
 }
 
 export interface SidebarButtonTypes {
+  key?: string;
   icon: IconType;
   isBottom: boolean;
 }

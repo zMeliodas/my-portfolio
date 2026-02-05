@@ -57,18 +57,18 @@ const TechStack = () => {
   ];
 
   return (
-    <div className="bg-backgroundColor w-full max-h-210 pb-16 overflow-auto custom-scroll">
-      <div className="flex flex-col max-w-4xl pt-8 px-24 gap-4">
+    <div className="bg-backgroundColor w-full h-full pb-16 overflow-auto custom-scroll">
+      <div className="flex flex-col max-w-4xl pt-8 px-8 xl:px-24 gap-4">
         <h1 className="text-draculaPink text-4xl font-medium font-mono">
           My Tech Stack
         </h1>
-        <p className="text-white text-xl font-medium font-mono">
+        <p className="text-white font-medium font-mono sm:text-sm xl:text-xl">
           These are the technologies I use to build modern, scalable, and
           user-focused web applications.
         </p>
       </div>
 
-      <div className="flex flex-wrap mt-8 gap-6 w-full px-24">
+      <div className="flex flex-wrap mt-8 gap-6 w-full px-8 xl:px-24">
         {cards.map((card) => (
           <Card
             icon={card.icon}

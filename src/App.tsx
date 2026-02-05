@@ -1,4 +1,5 @@
-import Window from "./components/Window";
+import TitleBar from "./components/TitleBar";
+import Footer from "./components/Footer";
 import Sidebar from "./components/Sidebar";
 import Explorer from "./components/Explorer";
 import TabBar from "./components/TabBar";
@@ -11,26 +12,34 @@ import TechStack from "./Pages/TechStack";
 
 const App = () => {
   return (
-    <>
-      <Window />
-      <Router>
-        <div className="flex">
+    <Router>
+      <div className="h-screen overflow-hidden flex flex-col bg-backgroundColor">
+        <TitleBar />
+
+        <div className="flex flex-1 overflow-hidden w-full">
           <Sidebar />
+
           <Explorer />
 
-          <div className="flex flex-col w-full">
+          <div className="flex-1 flex flex-col overflow-hidden">
             <TabBar />
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/projects" element={<Projects />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/techstack" element={<TechStack />} />
-              <Route path="/contacts" element={<Contacts />} />
-            </Routes>
+
+            <main className="flex-1 overflow-y-auto bg-backgroundColor custom-scroll">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/projects" element={<Projects />} />
+                <Route path="/contacts" element={<Contacts />} />
+                <Route path="/techstack" element={<TechStack />} />
+              </Routes>
+            </main>
           </div>
         </div>
-      </Router>
-    </>
+
+        {/* Bottom Bar */}
+        <Footer />
+      </div>
+    </Router>
   );
 };
 

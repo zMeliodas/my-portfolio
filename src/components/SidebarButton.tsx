@@ -5,12 +5,12 @@ const SidebarButton = ({
   isBottom = false,
 }: SidebarButtonTypes) => {
   return isBottom ? (
-    <button className="text-sideBarItemColor focus:text-white hover:text-white px-2.5 py-2 w-full flex justify-center">
-      <Icon className="w-7 h-7" />
+    <button className="text-sideBarItemColor focus:text-white hover:text-white px-3 py-2 w-full flex justify-center">
+      <Icon className="w-6 h-6 md:w-7 md:h-7" />
     </button>
   ) : (
-    <button className="text-sideBarItemColor focus:bg-sideBarHoverColor focus:border-l-2 border-sideBarFocusColor focus:text-white hover:text-white px-2.5 py-2 w-full flex justify-center">
-      <Icon className="w-7 h-7" />
+    <button className="text-sideBarItemColor focus:bg-sideBarHoverColor focus:border-l-2 border-sideBarFocusColor focus:text-white hover:text-white px-3 py-2 w-full flex justify-center">
+      <Icon className="w-6 h-6 md:w-7 md:h-7" />
     </button>
   );
 };

@@ -47,7 +47,7 @@ const Explorer = () => {
   ];
 
   return (
-    <div className="bg-explorerBgColor w-64 h-215 flex flex-col items-center">
+    <div className="hidden lg:flex flex-col bg-explorerBgColor w-64 h-full items-center">
       <div className="flex gap-2 items-center w-full justify-between px-4 py-2">
         <p className="text-white text-xs">EXPLORER</p>
         <button className="text-white hover:bg-explorerHoverColor px-1 rounded-md">
@@ -65,6 +65,7 @@ const Explorer = () => {
       <div className="flex flex-col items-center bg-explorerBgColor w-full">
         {buttons.map((button) => (
           <ExplorerButton
+            key={button.key}
             to={button.key}
             icon={button.icon}
             iconColor={button.iconColor}
