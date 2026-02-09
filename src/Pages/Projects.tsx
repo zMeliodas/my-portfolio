@@ -51,6 +51,7 @@ const Projects = () => {
       <div className="flex flex-wrap mt-8 gap-6 w-full px-8 pb-8 xl:px-24">
         {cards.map((card) => (
           <Card
+            key={card.title}
             imageSrc={card.imageSrc}
             title={card.title}
             description={card.description}
