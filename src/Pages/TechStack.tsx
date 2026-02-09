@@ -71,6 +71,7 @@ const TechStack = () => {
       <div className="flex flex-wrap mt-8 gap-6 w-full px-8 xl:px-24">
         {cards.map((card) => (
           <Card
+            key={card.title}
             icon={card.icon}
             title={card.title}
             description={card.description}
