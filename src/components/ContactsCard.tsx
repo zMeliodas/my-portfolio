@@ -11,7 +11,7 @@ const ContactsCard = () => {
           </p>
         </div>
 
-        <div className="flex ml-10 gap-2">
+        <div className="flex ml-4 md:ml-10 gap-2">
           <p className="font-mono text-white text-xs sm:text-lg md:text-xl xl:text-2xl">
             email:
           </p>
@@ -23,7 +23,7 @@ const ContactsCard = () => {
           </a>
         </div>
 
-        <div className="flex ml-10 gap-2">
+        <div className="flex ml-4 md:ml-10 gap-2">
           <p className="font-mono text-white text-xs sm:text-lg md:text-xl xl:text-2xl">
             github:
           </p>
@@ -37,7 +37,7 @@ const ContactsCard = () => {
           </a>
         </div>
 
-        <div className="flex ml-10 gap-2">
+        <div className="flex ml-4 md:ml-10 gap-2">
           <p className="font-mono text-white text-xs sm:text-lg md:text-xl xl:text-2xl">
             instagram:
           </p>
@@ -51,7 +51,7 @@ const ContactsCard = () => {
           </a>
         </div>
 
-        <div className="flex ml-10 gap-2">
+        <div className="flex ml-4 md:ml-10 gap-2">
           <p className="font-mono text-white text-xs sm:text-lg md:text-xl xl:text-2xl">
             facebook:
           </p>
@@ -65,7 +65,7 @@ const ContactsCard = () => {
           </a>
         </div>
 
-        <div className="flex ml-10 gap-2">
+        <div className="flex ml-4 md:ml-10 gap-2">
           <p className="font-mono text-white text-xs sm:text-lg md:text-xl xl:text-2xl">
             linkedIn:
           </p>
