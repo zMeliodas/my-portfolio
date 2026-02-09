@@ -18,7 +18,7 @@ const About = () => {
         <div className="flex flex-col justify-center content-center">
           <p className="text-md md:text-xl lg:text-2xl font-mono mt-8 text-white w-full">
             Hey, I'm a software developer who enjoys building full-stack
-            applications with React, Node.js, Express, and PostgreSQL. I like
+            applications with React, TypeScript, Node.js, Express, and PostgreSQL. I like
             working across the stack. Designing interfaces, building APIs, and
             structuring databases that make everything run smoothly.
           </p>
