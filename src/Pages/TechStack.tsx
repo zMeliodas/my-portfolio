@@ -68,7 +68,7 @@ const TechStack = () => {
         </p>
       </div>
 
-      <div className="grid w-full gap-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] mt-6 px-8 xl:px-24 pr-8 xl:pr-24">
+      <div className="grid w-full gap-4 grid-cols-[repeat(auto-fit,minmax(300px,1fr))] pb-8 mt-8 px-4 xl:px-24">
         {cards.map((card) => (
           <Card
             key={card.title}
