@@ -9,7 +9,7 @@ const SidebarButton = ({
       <Icon className="w-6 h-6 md:w-7 md:h-7" />
     </button>
   ) : (
-    <button className="text-sideBarItemColor focus:bg-sideBarHoverColor focus:border-l-2 border-sideBarFocusColor focus:text-white hover:text-white px-3 py-2 w-full flex justify-center">
+    <button className="text-sideBarItemColor focus:bg-sideBarHoverColor border-l-2 border-transparent focus:border-sideBarFocusColor focus:text-white hover:text-white px-3 py-2 w-full flex justify-center">
       <Icon className="w-6 h-6 md:w-7 md:h-7" />
     </button>
   );

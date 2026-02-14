@@ -5,16 +5,11 @@ export interface ButtonProps {
   icon: IconType;
   iconColor: string;
   fileName: string;
-  to: string;
-  onClick: () => void;
-  isSelected: boolean;
+  link: string;
 }
-
-export type TabType = "home" | "projects" | "techstack" | "contacts" | "about";
 
 export interface ButtonTypes {
   key: string;
-  tab: TabType;
   icon: IconType;
   iconColor: string;
   fileName: string;
