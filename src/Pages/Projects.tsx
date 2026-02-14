@@ -30,7 +30,7 @@ const Projects = () => {
     },
     {
       imageSrc: "",
-      title: "Fitness Client Tracker",
+      title: "GymSync",
       description: "Coming Soon!",
       link: "https://github.com/zMeliodas",
     },
@@ -38,7 +38,7 @@ const Projects = () => {
 
   return (
     <div className="bg-backgroundColor w-full h-full">
-      <div className="flex flex-col pt-8 px-8 2xl:px-24 gap-4">
+      <div className="flex flex-col pt-8 px-8 max-w-4xl 2xl:px-24 gap-4">
         <h1 className="text-draculaPink text-4xl font-medium font-mono lg:text-4xl">
           My Projects
         </h1>
@@ -48,7 +48,7 @@ const Projects = () => {
         </p>
       </div>
 
-      <div className="flex flex-wrap mt-8 gap-6 w-full px-8 pb-8 xl:px-24">
+      <div className="grid w-full gap-4 grid-cols-[repeat(auto-fit,minmax(190px,1fr))] pb-8 mt-8 px-8 xl:px-24">
         {cards.map((card) => (
           <Card
             key={card.title}
