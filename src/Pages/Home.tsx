@@ -28,13 +28,21 @@ const Home = () => {
           built with clean, efficient code.
         </p>
 
-        <div className="flex mt-2 sm:mt-4 justify-center xl:justify-start">
+        <div className="flex mt-2 sm:mt-4 justify-center xl:justify-start gap-2">
           <Link
             to="/projects"
-            className="flex items-center gap-2 text-white text-sm sm:text-base font-mono bg-draculaPink shadow-lg rounded-md py-2 sm:py-3 px-4 sm:px-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+            className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-draculaPink shadow-lg rounded-md py-2 sm:py-3 px-4 sm:px-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
           >
             View Projects <VscArrowRight />
           </Link>
+
+          <a
+            href="/RESUME 2026.pdf"
+            download="Cedrick_Cabansag_Resume.pdf"
+            className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-transparent border border-draculaPink shadow-lg rounded-md py-2 sm:py-3 px-4 sm:px-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
+          >
+            Download Resume ↓
+          </a>
         </div>
       </div>
     </div>
