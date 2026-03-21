@@ -38,6 +38,8 @@ const Home = () => {
 
           <a
             href="/resume.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
             download="Cedrick_Cabansag_Resume.pdf"
             className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-transparent border border-draculaPink shadow-lg rounded-md py-2 sm:py-3 px-4 sm:px-6 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
           >
