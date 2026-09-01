@@ -1,10 +1,27 @@
 import Card from "@/components/Card";
 import PLANTITOTITA from "@/assets/PLANTITOTITA.png";
+import FLOE from "@/assets/FLOE.svg";
 import tbh from "@/assets/tbh.svg";
 import { type CardTypes } from "@/types";
 
 const Projects = () => {
   const cards: CardTypes[] = [
+    {
+      imageSrc: FLOE,
+      title: "FLOE COMBAT",
+      description:
+        "A modern martial arts e-commerce website for FLOE Combat, featuring BJJ apparel, athlete highlights, customer reviews, and a bold visual identity inspired by combat sports culture.",
+
+      link: "https://floecombat-web.apps.skwtr.com/",
+    },
+    {
+      imageSrc: "",
+      title: "GymSync",
+      description:
+        "A gym membership management web app that helps gym staff track members, membership statuses, subscriptions, and check-ins through a simple and organized dashboard.",
+
+      link: "https://github.com/zMeliodas/gym-membership-management-system",
+    },
     {
       imageSrc: PLANTITOTITA,
       title: "PLANTITOTITA",
@@ -20,19 +37,6 @@ const Projects = () => {
         "An app where users can share anonymous confessions, compliments, and honest thoughts with friends.",
 
       link: "https://github.com/zMeliodas/tbh-confession-app",
-    },
-    {
-      imageSrc: "",
-      title: "Blog App",
-      description:
-        "A simple blog website where users can create blog posts with images and interact with other users by commenting on their posts.",
-      link: "https://github.com/zMeliodas/simple-blog",
-    },
-    {
-      imageSrc: "",
-      title: "GymSync",
-      description: "Coming Soon!",
-      link: "https://github.com/zMeliodas",
     },
   ];
 

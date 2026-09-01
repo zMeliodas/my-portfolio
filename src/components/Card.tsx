@@ -13,7 +13,7 @@ const Card = ({ imageSrc, title, description, link, icon }: CardTypes) => {
           href={link}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex flex-col gap-4 bg-cardColor border border-borderColor hover:border-draculaPink rounded-lg p-6 transition-colors duration-200 max-w-sm w-full"
+          className="flex flex-col gap-2 bg-cardColor border border-borderColor hover:border-draculaPink rounded-lg p-6 transition-colors duration-200 max-w-sm w-full"
         >
           <div className="bg-backgroundColor border rounded-lg border-borderColor w-12 h-12">
             {imageSrc !== "" ? (
