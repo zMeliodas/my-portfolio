@@ -52,7 +52,7 @@ const Sidebar = () => {
 
       <div className="flex flex-col-reverse items-center gap-2">
         <SidebarButton icon={IoMdSettings} isBottom={true} />
-        <SidebarButton icon={CgProfile} isBottom={true} />
+        <SidebarButton icon={CgProfile} isBottom={true} to="/admin" />
       </div>
     </div>
   );

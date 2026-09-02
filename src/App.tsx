@@ -9,6 +9,8 @@ import Projects from "./Pages/Projects";
 import About from "./Pages/About";
 import Contacts from "./Pages/Contacts";
 import TechStack from "./Pages/TechStack";
+import Admin from "./Admin/Pages/Admin";
+import Login from "./Admin/Pages/Login";
 
 const App = () => {
   return (
@@ -31,12 +33,13 @@ const App = () => {
                 <Route path="/projects" element={<Projects />} />
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/techstack" element={<TechStack />} />
+                <Route path="/admin" element={<Admin />} />
+                <Route path="/admin/login" element={<Login />} />
               </Routes>
             </main>
           </div>
         </div>
 
-        {/* Bottom Bar */}
         <Footer />
       </div>
     </Router>

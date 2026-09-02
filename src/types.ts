@@ -8,6 +8,12 @@ export interface ButtonProps {
   link: string;
 }
 
+export type SidebarButtonProps = {
+  icon: IconType;
+  isBottom: boolean;
+  to?: string;
+};
+
 export interface ButtonTypes {
   key: string;
   icon: IconType;
@@ -15,11 +21,12 @@ export interface ButtonTypes {
   fileName: string;
 }
 
-export interface SidebarButtonTypes {
+export type SidebarButtonTypes = {
   key?: string;
   icon: IconType;
   isBottom: boolean;
-}
+  to?: string;
+};
 
 export interface CardTypes {
   icon?: ReactNode;
