@@ -28,12 +28,12 @@ const ContactsCard = () => {
             github:
           </p>
           <a
-            href="https://github.com/zMeliodas"
+            href="https://github.com/cedlemuel"
             target="_blank"
             rel="noopener noreferrer"
             className="font-mono text-draculaPink text-xs sm:text-lg md:text-xl xl:text-2xl hover:underline"
           >
-            zMeliodas
+            cedlemuel
           </a>
         </div>
 
@@ -56,7 +56,7 @@ const ContactsCard = () => {
             facebook:
           </p>
           <a
-            href="https://www.facebook.com/meliodasw0w/"
+            href="https://www.facebook.com/cedlemuel/"
             target="_blank"
             rel="noopener noreferrer"
             className="font-mono text-draculaPink text-xs sm:text-lg md:text-xl xl:text-2xl hover:underline"
