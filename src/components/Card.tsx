@@ -6,39 +6,34 @@ const Card = ({ imageSrc, title, description, link, icon }: CardTypes) => {
     return title.trim().charAt(0).toUpperCase();
   };
 
+  const Wrapper = link ? "a" : "div";
+  const wrapperProps = link
+    ? { href: link, target: "_blank", rel: "noopener noreferrer" }
+    : {};
+
   return (
-    <>
-      {link ? (
-        <a
-          href={link}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex flex-col gap-2 bg-cardColor border border-borderColor hover:border-draculaPink rounded-lg p-6 transition-colors duration-200 max-w-sm w-full"
-        >
-          <div className="bg-backgroundColor border rounded-lg border-borderColor w-12 h-12">
-            {imageSrc !== "" ? (
-              <img className="p-1" src={imageSrc} alt="" />
-            ) : (
-              <div
-                className={`rounded-lg bg-draculaPink text-white flex items-center justify-center text-xl font-semibold font-mono h-full`}
-              >
-                {getTitleInitial(title)}
-              </div>
-            )}
+    <Wrapper
+      {...wrapperProps}
+      className="flex flex-col gap-3 bg-cardColor border border-borderColor hover:border-draculaPink rounded-lg p-6 transition-colors duration-200 w-full h-full"
+    >
+      <div className="bg-backgroundColor flex items-center justify-center border rounded-lg border-borderColor w-12 h-12 overflow-hidden">
+        {imageSrc ? (
+          <img
+            className="w-full h-full object-contain p-1"
+            src={imageSrc}
+            alt={title}
+          />
+        ) : icon ? (
+          icon
+        ) : (
+          <div className="rounded-lg bg-draculaPink text-white flex items-center justify-center text-xl font-semibold font-mono h-full w-full">
+            {getTitleInitial(title)}
           </div>
-          <h1 className="text-draculaPink font-mono text-2xl">{title}</h1>
-          <p className="text-white font-mono text-md">{description}</p>
-        </a>
-      ) : (
-        <div className="flex flex-col gap-4 bg-cardColor border border-borderColor hover:border-draculaPink rounded-lg p-6 transition-colors duration-200 max-w-sm w-full">
-          <div className="bg-backgroundColor flex justify-center items-center border rounded-lg border-borderColor w-12 h-12">
-            {icon}
-          </div>
-          <h1 className="text-draculaPink font-mono text-2xl">{title}</h1>
-          <p className="text-white font-mono text-md">{description}</p>
-        </div>
-      )}
-    </>
+        )}
+      </div>
+      <h1 className="text-draculaPink font-mono text-2xl">{title}</h1>
+      <p className="text-white font-mono text-sm">{description}</p>
+    </Wrapper>
   );
 };
 
