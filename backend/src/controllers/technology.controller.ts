@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import type { UpdateTechnologyInput } from "../types.js";
+import type { UpdateTechnologyInput } from "../types/types.js";
 
 import {
   createTechnologyService,

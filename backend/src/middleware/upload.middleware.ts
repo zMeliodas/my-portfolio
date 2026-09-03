@@ -1,4 +1,5 @@
 import multer from "multer";
+import path from "node:path";
 
 const storage = multer.diskStorage({
   destination: (_req, _file, callback) => {
@@ -36,19 +37,26 @@ const imageFileFilter: multer.Options["fileFilter"] = (
   file,
   callback,
 ) => {
-  const allowedTypes = [
+  const allowedMimeTypes = [
     "image/jpeg",
     "image/png",
     "image/webp",
     "image/svg+xml",
   ];
 
-  if (!allowedTypes.includes(file.mimetype)) {
-    callback(new Error("Only JPG, PNG, and WebP images are allowed."));
+  const extension = path.extname(file.originalname).toLowerCase();
+
+  const isAllowedMimeType = allowedMimeTypes.includes(file.mimetype);
+
+  const isSvgOctetStream =
+    file.mimetype === "application/octet-stream" && extension === ".svg";
+
+  if (isAllowedMimeType || isSvgOctetStream) {
+    callback(null, true);
     return;
   }
 
-  callback(null, true);
+  callback(new Error("Only JPG, PNG, WebP, and SVG images are allowed."));
 };
 
 const uploadPdf = multer({

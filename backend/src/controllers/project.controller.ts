@@ -1,57 +1,36 @@
 import type { Request, Response } from "express";
-import type { UpdateProjectInput } from "../types.js";
+import type { UpdateProjectInput } from "../types/types.js";
 
 import {
   createProjectService,
   deleteProjectService,
   getProjectByIdService,
+  getProjectByTitleService,
   getProjectsService,
-  setProjectTechnologiesService,
   updateProjectService,
   validateTechnologyIdsService,
 } from "../services/project.service.js";
 
 import { deleteProjectImageService } from "../services/upload.service.js";
 
-const cleanupUploadedImage = async (req: Request) => {
-  if (!req.file) return;
-
-  try {
-    await deleteProjectImageService(`/uploads/projects/${req.file.filename}`);
-  } catch (error) {
-    console.error("Failed to clean up uploaded project image:", error);
-  }
-};
-
-const parseTechnologyIds = (techStack: unknown): number[] | undefined => {
-  if (techStack === undefined) {
-    return undefined;
-  }
-
-  let parsed: unknown;
-
-  try {
-    parsed = typeof techStack === "string" ? JSON.parse(techStack) : techStack;
-  } catch {
-    return undefined;
-  }
-
-  if (
-    !Array.isArray(parsed) ||
-    !parsed.every((id) => typeof id === "number" && Number.isInteger(id))
-  ) {
-    return undefined;
-  }
-
-  return parsed;
-};
+import {
+  isValidLink,
+  isValidProjectDescription,
+  isValidProjectTitle,
+  isValidSortOrder,
+} from "../validators/project.validator.js";
+import { cleanupUploadedImage } from "../utils/cleanupUploadedImage.js";
+import { parseTechnologyIds } from "../utils/parseTechnologyIds.js";
 
 const createProjectController = async (req: Request, res: Response) => {
   try {
     const { title, description, liveLink, githubLink, sortOrder, techStack } =
       req.body;
 
-    if (!title || !description) {
+    if (
+      !isValidProjectTitle(title) ||
+      !isValidProjectDescription(description)
+    ) {
       await cleanupUploadedImage(req);
 
       return res.status(400).json({
@@ -62,6 +41,30 @@ const createProjectController = async (req: Request, res: Response) => {
     if (!req.file) {
       return res.status(400).json({
         message: "Project image is required.",
+      });
+    }
+
+    if (sortOrder !== undefined && !isValidSortOrder(sortOrder)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Sort order must be a valid non-negative integer.",
+      });
+    }
+
+    if (liveLink !== undefined && !isValidLink(liveLink)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Live link must be a string.",
+      });
+    }
+
+    if (githubLink !== undefined && !isValidLink(githubLink)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "GitHub link must be a string.",
       });
     }
 
@@ -76,6 +79,21 @@ const createProjectController = async (req: Request, res: Response) => {
       });
     }
 
+    const trimmedTitle = title.trim();
+    const trimmedDescription = description.trim();
+
+    const parsedSortOrder = sortOrder !== undefined ? Number(sortOrder) : 0;
+
+    const existingProject = await getProjectByTitleService(trimmedTitle);
+
+    if (existingProject) {
+      await cleanupUploadedImage(req);
+
+      return res.status(409).json({
+        message: "Project already exists.",
+      });
+    }
+
     const technologiesExist = await validateTechnologyIdsService(technologyIds);
 
     if (!technologiesExist) {
@@ -86,41 +104,34 @@ const createProjectController = async (req: Request, res: Response) => {
       });
     }
 
-    const parsedSortOrder = sortOrder !== undefined ? Number(sortOrder) : 0;
-
-    if (!Number.isInteger(parsedSortOrder) || parsedSortOrder < 0) {
-      await cleanupUploadedImage(req);
-
-      return res.status(400).json({
-        message: "Sort order must be a valid non-negative integer.",
-      });
-    }
-
     const imageUrl = `/uploads/projects/${req.file.filename}`;
 
-    const project = await createProjectService({
-      title,
-      description,
-      imageUrl,
+    const project = await createProjectService(
+      {
+        title: trimmedTitle,
+        description: trimmedDescription,
+        imageUrl,
 
-      ...(liveLink !== undefined && {
-        liveLink,
-      }),
+        ...(liveLink !== undefined && {
+          liveLink: liveLink.trim(),
+        }),
 
-      ...(githubLink !== undefined && {
-        githubLink,
-      }),
+        ...(githubLink !== undefined && {
+          githubLink: githubLink.trim(),
+        }),
 
-      sortOrder: parsedSortOrder,
-    });
-
-    await setProjectTechnologiesService(project.id, technologyIds);
+        sortOrder: parsedSortOrder,
+      },
+      technologyIds,
+    );
 
     return res.status(201).json({
       message: "Project created successfully.",
       result: project,
     });
   } catch (error) {
+    await cleanupUploadedImage(req);
+
     console.error(error);
 
     return res.status(500).json({
@@ -150,7 +161,7 @@ const updateProjectController = async (req: Request, res: Response) => {
   try {
     const id = Number(req.params.id);
 
-    if (Number.isNaN(id)) {
+    if (!Number.isInteger(id) || id < 1) {
       await cleanupUploadedImage(req);
 
       return res.status(400).json({
@@ -171,6 +182,48 @@ const updateProjectController = async (req: Request, res: Response) => {
     const { title, description, liveLink, githubLink, sortOrder, techStack } =
       req.body;
 
+    const updateData: UpdateProjectInput = {};
+
+    if (title !== undefined && !isValidProjectTitle(title)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Project title cannot be empty.",
+      });
+    }
+
+    if (description !== undefined && !isValidProjectDescription(description)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Description cannot be empty.",
+      });
+    }
+
+    if (liveLink !== undefined && !isValidLink(liveLink)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Live link must be a string.",
+      });
+    }
+
+    if (githubLink !== undefined && !isValidLink(githubLink)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "GitHub link must be a string.",
+      });
+    }
+
+    if (sortOrder !== undefined && !isValidSortOrder(sortOrder)) {
+      await cleanupUploadedImage(req);
+
+      return res.status(400).json({
+        message: "Sort order must be a valid non-negative integer.",
+      });
+    }
+
     let technologyIds: number[] | undefined;
 
     if (techStack !== undefined) {
@@ -183,7 +236,25 @@ const updateProjectController = async (req: Request, res: Response) => {
           message: "Tech stack must be an array of valid technology IDs.",
         });
       }
+    }
 
+    if (title !== undefined) {
+      const trimmedTitle = title.trim();
+
+      const existingProject = await getProjectByTitleService(trimmedTitle, id);
+
+      if (existingProject) {
+        await cleanupUploadedImage(req);
+
+        return res.status(409).json({
+          message: "Project already exists.",
+        });
+      }
+
+      updateData.title = trimmedTitle;
+    }
+
+    if (technologyIds !== undefined) {
       const technologiesExist =
         await validateTechnologyIdsService(technologyIds);
 
@@ -196,51 +267,31 @@ const updateProjectController = async (req: Request, res: Response) => {
       }
     }
 
-    let parsedSortOrder: number | undefined;
+    if (description !== undefined) {
+      updateData.description = description.trim();
+    }
+
+    if (liveLink !== undefined) {
+      updateData.liveLink = liveLink.trim();
+    }
+
+    if (githubLink !== undefined) {
+      updateData.githubLink = githubLink.trim();
+    }
 
     if (sortOrder !== undefined) {
-      parsedSortOrder = Number(sortOrder);
-
-      if (!Number.isInteger(parsedSortOrder) || parsedSortOrder < 0) {
-        await cleanupUploadedImage(req);
-
-        return res.status(400).json({
-          message: "Sort order must be a valid non-negative integer.",
-        });
-      }
+      updateData.sortOrder = Number(sortOrder);
     }
 
-    const updateData: UpdateProjectInput = {
-      ...(title !== undefined && {
-        title,
-      }),
-
-      ...(description !== undefined && {
-        description,
-      }),
-
-      ...(liveLink !== undefined && {
-        liveLink,
-      }),
-
-      ...(githubLink !== undefined && {
-        githubLink,
-      }),
-
-      ...(req.file && {
-        imageUrl: `/uploads/projects/${req.file.filename}`,
-      }),
-
-      ...(parsedSortOrder !== undefined && {
-        sortOrder: parsedSortOrder,
-      }),
-    };
-
-    const updatedProject = await updateProjectService(id, updateData);
-
-    if (technologyIds !== undefined) {
-      await setProjectTechnologiesService(id, technologyIds);
+    if (req.file) {
+      updateData.imageUrl = `/uploads/projects/${req.file.filename}`;
     }
+
+    const updatedProject = await updateProjectService(
+      id,
+      updateData,
+      technologyIds,
+    );
 
     if (req.file && project.image_url) {
       try {
@@ -255,6 +306,8 @@ const updateProjectController = async (req: Request, res: Response) => {
       result: updatedProject,
     });
   } catch (error) {
+    await cleanupUploadedImage(req);
+
     console.error(error);
 
     return res.status(500).json({
@@ -296,6 +349,8 @@ const deleteProjectController = async (req: Request, res: Response) => {
       result: deletedProject,
     });
   } catch (error) {
+    await cleanupUploadedImage(req);
+
     console.error(error);
 
     return res.status(500).json({

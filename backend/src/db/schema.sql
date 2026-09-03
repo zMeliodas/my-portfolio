@@ -28,3 +28,11 @@ CREATE TABLE
     technology_id INTEGER NOT NULL REFERENCES technologies (id) ON DELETE CASCADE,
     PRIMARY KEY (project_id, technology_id)
   );
+
+CREATE TABLE
+  IF NOT EXISTS admins (
+    id SERIAL PRIMARY KEY,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password_hash TEXT NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  );

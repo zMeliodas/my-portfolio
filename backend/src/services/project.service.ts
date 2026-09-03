@@ -1,38 +1,154 @@
-import type { CreateProjectInput, UpdateProjectInput } from "../types.js";
+import type { CreateProjectInput, UpdateProjectInput } from "../types/types.js";
 import pool from "../db/db.js";
 
-const createProjectService = async ({
-  title,
-  description,
-  imageUrl,
-  liveLink,
-  githubLink,
-  sortOrder = 0,
-}: CreateProjectInput) => {
-  const result = await pool.query(
-    `
-      INSERT INTO projects (
+const createProjectService = async (
+  {
+    title,
+    description,
+    imageUrl,
+    liveLink,
+    githubLink,
+    sortOrder = 0,
+  }: CreateProjectInput,
+  technologyIds: number[],
+) => {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const projectResult = await client.query(
+      `
+        INSERT INTO projects (
+          title,
+          description,
+          image_url,
+          live_link,
+          github_link,
+          sort_order
+        )
+        VALUES ($1, $2, $3, $4, $5, $6)
+        RETURNING *
+      `,
+      [
         title,
         description,
-        image_url,
-        live_link,
-        github_link,
-        sort_order
-      )
-      VALUES ($1, $2, $3, $4, $5, $6)
-      RETURNING *
-    `,
-    [
-      title,
-      description,
-      imageUrl,
-      liveLink ?? null,
-      githubLink ?? null,
-      sortOrder,
-    ],
-  );
+        imageUrl,
+        liveLink ?? null,
+        githubLink ?? null,
+        sortOrder,
+      ],
+    );
 
-  return result.rows[0];
+    const project = projectResult.rows[0];
+
+    if (technologyIds.length > 0) {
+      await client.query(
+        `
+          INSERT INTO project_technologies (
+            project_id,
+            technology_id
+          )
+          SELECT $1, UNNEST($2::int[])
+        `,
+        [project.id, technologyIds],
+      );
+    }
+
+    await client.query("COMMIT");
+
+    return project;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
+const updateProjectService = async (
+  id: number,
+  {
+    title,
+    description,
+    imageUrl,
+    liveLink,
+    githubLink,
+    sortOrder,
+  }: UpdateProjectInput,
+  technologyIds?: number[],
+) => {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    const projectResult = await client.query(
+      `
+        UPDATE projects
+        SET
+          title = COALESCE($1, title),
+          description = COALESCE($2, description),
+          image_url = COALESCE($3, image_url),
+          live_link = COALESCE($4, live_link),
+          github_link = COALESCE($5, github_link),
+          sort_order = COALESCE($6, sort_order),
+          updated_at = CURRENT_TIMESTAMP
+        WHERE id = $7
+        RETURNING *
+      `,
+      [
+        title ?? null,
+        description ?? null,
+        imageUrl ?? null,
+        liveLink ?? null,
+        githubLink ?? null,
+        sortOrder ?? null,
+        id,
+      ],
+    );
+
+    const updatedProject = projectResult.rows[0];
+
+    if (!updatedProject) {
+      await client.query("ROLLBACK");
+      return undefined;
+    }
+
+    // Only update technologies if techStack was provided.
+    if (technologyIds !== undefined) {
+      await client.query(
+        `
+          DELETE FROM project_technologies
+          WHERE project_id = $1
+        `,
+        [id],
+      );
+
+      if (technologyIds.length > 0) {
+        await client.query(
+          `
+            INSERT INTO project_technologies (
+              project_id,
+              technology_id
+            )
+            SELECT $1, UNNEST($2::int[])
+            ON CONFLICT DO NOTHING
+          `,
+          [id, technologyIds],
+        );
+      }
+    }
+
+    await client.query("COMMIT");
+
+    return updatedProject;
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
 };
 
 const getProjectsService = async () => {
@@ -77,45 +193,6 @@ const getProjectByIdService = async (id: number) => {
   return result.rows[0];
 };
 
-const updateProjectService = async (
-  id: number,
-  {
-    title,
-    description,
-    imageUrl,
-    liveLink,
-    githubLink,
-    sortOrder,
-  }: UpdateProjectInput,
-) => {
-  const result = await pool.query(
-    `
-      UPDATE projects
-      SET
-        title = COALESCE($1, title),
-        description = COALESCE($2, description),
-        image_url = COALESCE($3, image_url),
-        live_link = COALESCE($4, live_link),
-        github_link = COALESCE($5, github_link),
-        sort_order = COALESCE($6, sort_order),
-        updated_at = CURRENT_TIMESTAMP
-      WHERE id = $7
-      RETURNING *
-    `,
-    [
-      title ?? null,
-      description ?? null,
-      imageUrl ?? null,
-      liveLink ?? null,
-      githubLink ?? null,
-      sortOrder ?? null,
-      id,
-    ],
-  );
-
-  return result.rows[0];
-};
-
 const deleteProjectService = async (id: number) => {
   const result = await pool.query(
     `
@@ -148,52 +225,27 @@ const validateTechnologyIdsService = async (technologyIds: number[]) => {
   return result.rows.length === uniqueIds.length;
 };
 
-const setProjectTechnologiesService = async (
-  projectId: number,
-  technologyIds: number[],
-) => {
-  const client = await pool.connect();
+const getProjectByTitleService = async (title: string, excludeId?: number) => {
+  const result = await pool.query(
+    `
+      SELECT *
+      FROM projects
+      WHERE LOWER(title) = LOWER($1)
+        AND ($2::int IS NULL OR id != $2)
+      LIMIT 1
+    `,
+    [title, excludeId ?? null],
+  );
 
-  try {
-    await client.query("BEGIN");
-
-    await client.query(
-      `
-        DELETE FROM project_technologies
-        WHERE project_id = $1
-      `,
-      [projectId],
-    );
-
-    if (technologyIds.length > 0) {
-      await client.query(
-        `
-          INSERT INTO project_technologies (
-            project_id,
-            technology_id
-          )
-          SELECT $1, UNNEST($2::int[])
-          ON CONFLICT DO NOTHING
-        `,
-        [projectId, technologyIds],
-      );
-    }
-
-    await client.query("COMMIT");
-  } catch (error) {
-    await client.query("ROLLBACK");
-    throw error;
-  } finally {
-    client.release();
-  }
+  return result.rows[0];
 };
 
 export {
   createProjectService,
+  updateProjectService,
   getProjectsService,
   getProjectByIdService,
-  updateProjectService,
   deleteProjectService,
   validateTechnologyIdsService,
-  setProjectTechnologiesService,
+  getProjectByTitleService,
 };

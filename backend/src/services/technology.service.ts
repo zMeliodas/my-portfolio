@@ -1,4 +1,4 @@
-import type { CreateTechnologyInput, UpdateTechnologyInput } from "../types.js";
+import type { CreateTechnologyInput, UpdateTechnologyInput } from "../types/types.js";
 
 import pool from "../db/db.js";
 

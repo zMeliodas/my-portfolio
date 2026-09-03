@@ -4,6 +4,7 @@ import uploadRoutes from "./routes/upload.routes.js";
 import pool from "./db/db.js";
 import projectRoutes from "./routes/project.routes.js";
 import technologyRoutes from "./routes/technology.routes.js";
+import adminRoutes from "./routes/admin.routes.js";
 
 const app = express();
 
@@ -34,5 +35,6 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/technologies", technologyRoutes);
+app.use("/api/admin", adminRoutes);
 
 export default app;
