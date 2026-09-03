@@ -28,10 +28,12 @@ export type SidebarButtonTypes = {
   to?: string;
 };
 
-export interface CardTypes {
-  icon?: ReactNode;
+export type CardTypes = {
   imageSrc?: string;
-  link?: string;
   title: string;
   description: string;
-}
+  githubLink?: string;
+  liveLink?: string;
+  techStack?: string[];
+  icon?: ReactNode;
+};
