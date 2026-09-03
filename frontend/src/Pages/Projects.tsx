@@ -12,6 +12,8 @@ const Projects = () => {
       description:
         "A modern martial arts e-commerce website for FLOE Combat, featuring BJJ apparel, athlete highlights, customer reviews, and a bold visual identity inspired by combat sports culture.",
       liveLink: "https://floecombat-web.apps.skwtr.com/",
+      githubLink:
+        "https://github.com/zMeliodas/gym-membership-management-system",
       techStack: ["React", "Express", "TypeScript", "PostgreSQL"],
     },
     {

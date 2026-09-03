@@ -51,16 +51,6 @@ const Card = ({
 
       {(githubLink || liveLink) && (
         <div className="flex gap-2 mt-1 flex-wrap">
-          {githubLink && (
-            <a
-              href={githubLink}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-transparent border border-borderColor rounded-md py-2 px-4 transform transition-all duration-300 hover:-translate-y-1 hover:border-draculaPink hover:shadow-xl"
-            >
-              <VscGithub /> GitHub
-            </a>
-          )}
           {liveLink && (
             <a
               href={liveLink}
@@ -69,6 +59,16 @@ const Card = ({
               className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-draculaPink shadow-lg rounded-md py-2 px-4 transform transition-all duration-300 hover:-translate-y-1 hover:shadow-xl"
             >
               <VscLinkExternal /> Live
+            </a>
+          )}
+          {githubLink && (
+            <a
+              href={githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 text-white text-xs sm:text-sm font-mono bg-transparent border border-borderColor rounded-md py-2 px-4 transform transition-all duration-300 hover:-translate-y-1 hover:border-draculaPink hover:shadow-xl"
+            >
+              <VscGithub /> GitHub
             </a>
           )}
         </div>
