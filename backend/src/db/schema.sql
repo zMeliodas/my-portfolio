@@ -1,0 +1,19 @@
+CREATE TABLE IF NOT EXISTS projects (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(100) NOT NULL,
+  description TEXT NOT NULL,
+  image_url TEXT NOT NULL,
+  live_link TEXT,
+  github_link TEXT,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS technologies (
+  id SERIAL PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  icon_url TEXT,
+  sort_order INTEGER DEFAULT 0,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
