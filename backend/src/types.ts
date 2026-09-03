@@ -15,3 +15,17 @@ export type UpdateProjectInput = {
   githubLink?: string;
   sortOrder?: number;
 };
+
+export type CreateTechnologyInput = {
+  name: string;
+  iconSlug: string;
+  iconHex: string;
+  sortOrder?: number;
+};
+
+export type UpdateTechnologyInput = {
+  name?: string;
+  iconSlug?: string;
+  iconHex?: string;
+  sortOrder?: number;
+};

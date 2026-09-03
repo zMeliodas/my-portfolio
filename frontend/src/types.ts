@@ -37,3 +37,15 @@ export type CardTypes = {
   techStack?: string[];
   icon?: ReactNode;
 };
+
+export type TechCardProps = {
+  icon: ReactNode;
+  name: string;
+};
+
+export type Technology = {
+  id: number;
+  name: string;
+  icon_key: string;
+  sort_order: number;
+};

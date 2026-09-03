@@ -3,6 +3,7 @@ import cors from "cors";
 import uploadRoutes from "./routes/upload.routes.js";
 import pool from "./db/db.js";
 import projectRoutes from "./routes/project.routes.js";
+import technologyRoutes from "./routes/technology.routes.js";
 
 const app = express();
 
@@ -32,5 +33,6 @@ app.get("/api/health/database", async (_req, res) => {
 app.use("/uploads", express.static("uploads"));
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/projects", projectRoutes);
+app.use("/api/technologies", technologyRoutes);
 
 export default app;

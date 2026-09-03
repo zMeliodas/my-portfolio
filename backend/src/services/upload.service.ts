@@ -51,9 +51,29 @@ const deleteProjectService = async (id: number) => {
   return result.rows[0];
 };
 
+const addProjectTechnologiesService = async (
+  projectId: number,
+  technologyIds: number[],
+) => {
+  for (const technologyId of technologyIds) {
+    await pool.query(
+      `
+        INSERT INTO project_technologies (
+          project_id,
+          technology_id
+        )
+        VALUES ($1, $2)
+        ON CONFLICT DO NOTHING
+      `,
+      [projectId, technologyId],
+    );
+  }
+};
+
 export {
   uploadPdfService,
   uploadProjectImageService,
   deleteProjectImageService,
   deleteProjectService,
+  addProjectTechnologiesService
 };

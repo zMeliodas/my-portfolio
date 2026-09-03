@@ -37,9 +37,28 @@ const createProjectService = async ({
 
 const getProjectsService = async () => {
   const result = await pool.query(`
-    SELECT *
-    FROM projects
-    ORDER BY sort_order ASC, created_at DESC
+    SELECT
+      p.*,
+
+      COALESCE(
+        (
+          SELECT json_agg(
+            json_build_object(
+              'id', t.id,
+              'name', t.name
+            )
+            ORDER BY t.sort_order ASC
+          )
+          FROM project_technologies pt
+          JOIN technologies t
+            ON t.id = pt.technology_id
+          WHERE pt.project_id = p.id
+        ),
+        '[]'::json
+      ) AS "techStack"
+
+    FROM projects p
+    ORDER BY p.sort_order ASC, p.created_at DESC
   `);
 
   return result.rows;
@@ -97,9 +116,84 @@ const updateProjectService = async (
   return result.rows[0];
 };
 
+const deleteProjectService = async (id: number) => {
+  const result = await pool.query(
+    `
+      DELETE FROM projects
+      WHERE id = $1
+      RETURNING *
+    `,
+    [id],
+  );
+
+  return result.rows[0];
+};
+
+const validateTechnologyIdsService = async (technologyIds: number[]) => {
+  if (technologyIds.length === 0) {
+    return true;
+  }
+
+  const uniqueIds = [...new Set(technologyIds)];
+
+  const result = await pool.query(
+    `
+      SELECT id
+      FROM technologies
+      WHERE id = ANY($1::int[])
+    `,
+    [uniqueIds],
+  );
+
+  return result.rows.length === uniqueIds.length;
+};
+
+const setProjectTechnologiesService = async (
+  projectId: number,
+  technologyIds: number[],
+) => {
+  const client = await pool.connect();
+
+  try {
+    await client.query("BEGIN");
+
+    await client.query(
+      `
+        DELETE FROM project_technologies
+        WHERE project_id = $1
+      `,
+      [projectId],
+    );
+
+    if (technologyIds.length > 0) {
+      await client.query(
+        `
+          INSERT INTO project_technologies (
+            project_id,
+            technology_id
+          )
+          SELECT $1, UNNEST($2::int[])
+          ON CONFLICT DO NOTHING
+        `,
+        [projectId, technologyIds],
+      );
+    }
+
+    await client.query("COMMIT");
+  } catch (error) {
+    await client.query("ROLLBACK");
+    throw error;
+  } finally {
+    client.release();
+  }
+};
+
 export {
   createProjectService,
   getProjectsService,
   getProjectByIdService,
   updateProjectService,
+  deleteProjectService,
+  validateTechnologyIdsService,
+  setProjectTechnologiesService,
 };
