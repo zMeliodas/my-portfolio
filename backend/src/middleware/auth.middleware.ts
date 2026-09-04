@@ -1,4 +1,5 @@
 import type { NextFunction, Request, Response } from "express";
+
 import jwt from "jsonwebtoken";
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -7,20 +8,14 @@ if (!JWT_SECRET) {
   throw new Error("JWT_SECRET is missing.");
 }
 
-const authorizeAdmin = (
-  req: Request,
-  res: Response,
-  next: NextFunction,
-) => {
-  const authorization = req.headers.authorization;
+const authorizeAdmin = (req: Request, res: Response, next: NextFunction) => {
+  const token = req.cookies.adminToken;
 
-  if (!authorization?.startsWith("Bearer ")) {
+  if (typeof token !== "string" || !token) {
     return res.status(401).json({
       message: "Unauthorized.",
     });
   }
-
-  const token = authorization.slice(7);
 
   try {
     const payload = jwt.verify(token, JWT_SECRET);

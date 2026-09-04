@@ -2,8 +2,8 @@ import { useState } from "react";
 import ProjectCards from "../../admin/common/ProjectCards";
 import ResumeSection from "../../admin/common/ResumeSection";
 import Tabs from "../../admin/common/Tabs";
-import type { TabKey } from "../types";
 import TechnologiesCards from "../../admin/common/TechnologiesCards";
+import type { TabKey } from "../../admin/adminTypes";
 
 const Admin = () => {
   const [activeTab, setActiveTab] = useState<TabKey>("resume");

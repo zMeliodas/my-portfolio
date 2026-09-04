@@ -1,4 +1,4 @@
-import type { TabsProps } from "../types";
+import type { TabsProps } from "../adminTypes";
 
 const Tabs = ({ activeTab, onChange }: TabsProps) => {
   return (

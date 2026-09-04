@@ -1,10 +1,12 @@
 import { NavLink } from "react-router-dom";
+
 import type { SidebarButtonTypes } from "@/types";
 
 const SidebarButton = ({
   icon: Icon,
-  isBottom = false,
+  isBottom,
   to,
+  onClick,
 }: SidebarButtonTypes) => {
   const baseClass = isBottom
     ? "text-sideBarItemColor focus:text-white hover:text-white px-3 py-2 w-full flex justify-center"
@@ -27,12 +29,12 @@ const SidebarButton = ({
     );
   }
 
-  return isBottom ? (
-    <button className={baseClass}>
-      <Icon className="w-6 h-6 md:w-7 md:h-7" />
-    </button>
-  ) : (
-    <button className={baseClass}>
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      className={baseClass}
+    >
       <Icon className="w-6 h-6 md:w-7 md:h-7" />
     </button>
   );

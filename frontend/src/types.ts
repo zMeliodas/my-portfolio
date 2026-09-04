@@ -26,6 +26,7 @@ export type SidebarButtonTypes = {
   icon: IconType;
   isBottom: boolean;
   to?: string;
+  onClick?: () => void;
 };
 
 export type CardTypes = {
@@ -48,4 +49,33 @@ export type Technology = {
   name: string;
   icon_key: string;
   sort_order: number;
+};
+
+export type Admin = {
+  id: number;
+  username: string;
+};
+
+export type LoginResponse = {
+  message: string;
+  result: {
+    admin: Admin;
+  };
+};
+
+export type CurrentAdminResponse = {
+  message: string;
+  result: {
+    admin: {
+      id: number;
+      username: string;
+    };
+  };
+};
+
+export type AuthContextType = {
+  isLoggedIn: boolean;
+  isLoading: boolean;
+  refreshAuth: () => Promise<void>;
+  logout: () => Promise<void>;
 };
