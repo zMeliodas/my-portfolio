@@ -54,8 +54,12 @@ const Sidebar = () => {
         setShowProfileMenu(false);
       }
     };
+
     document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
   }, []);
 
   const handleSettingsClick = () => {
@@ -67,7 +71,11 @@ const Sidebar = () => {
   };
 
   const handleProfileClick = () => {
-    navigate("/admin");
+    if (isLoggedIn) {
+      navigate("/admin");
+    } else {
+      navigate("/admin/login");
+    }
   };
 
   const handleLogout = async () => {

@@ -6,6 +6,7 @@ import projectRoutes from "./routes/project.routes.js";
 import technologyRoutes from "./routes/technology.routes.js";
 import adminRoutes from "./routes/admin.routes.js";
 import cookieParser from "cookie-parser";
+import path from "path";
 
 const app = express();
 
@@ -39,7 +40,7 @@ app.get("/api/health/database", async (_req, res) => {
   }
 });
 
-app.use("/uploads", express.static("uploads"));
+app.use("/uploads", express.static(path.resolve("uploads")));
 app.use("/api/uploads", uploadRoutes);
 app.use("/api/projects", projectRoutes);
 app.use("/api/technologies", technologyRoutes);

@@ -12,12 +12,19 @@ const storage = multer.diskStorage({
 });
 
 const fileFilter: multer.Options["fileFilter"] = (_req, file, callback) => {
-  if (file.mimetype !== "application/pdf") {
-    callback(new Error("Only PDF files are allowed."));
+  const extension = path.extname(file.originalname).toLowerCase();
+
+  const isPdfMimeType = file.mimetype === "application/pdf";
+
+  const isPdfOctetStream =
+    file.mimetype === "application/octet-stream" && extension === ".pdf";
+
+  if (isPdfMimeType || isPdfOctetStream) {
+    callback(null, true);
     return;
   }
 
-  callback(null, true);
+  callback(new Error("Only PDF files are allowed."));
 };
 
 const projectImageStorage = multer.diskStorage({

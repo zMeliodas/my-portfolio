@@ -79,3 +79,14 @@ export type AuthContextType = {
   refreshAuth: () => Promise<void>;
   logout: () => Promise<void>;
 };
+
+export type Resume = {
+  originalName: string;
+  url: string;
+  updatedAt: string;
+};
+
+export type ResumeResponse = {
+  message: string;
+  result: Resume;
+};

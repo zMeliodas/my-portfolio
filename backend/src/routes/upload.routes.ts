@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { uploadPdfController } from "../controllers/upload.controller.js";
+import { getResumeController, uploadPdfController } from "../controllers/upload.controller.js";
 import {
   uploadPdf,
   uploadProjectImage,
@@ -8,6 +8,8 @@ import { uploadProjectImageController } from "../controllers/upload.controller.j
 import { authorizeAdmin } from "../middleware/auth.middleware.js";
 
 const router = Router();
+
+router.get("/pdf", getResumeController);
 
 router.post(
   "/pdf",

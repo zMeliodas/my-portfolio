@@ -1,13 +1,41 @@
-import { unlink } from "node:fs/promises";
+import { access, unlink } from "node:fs/promises";
 import path from "node:path";
 import pool from "../db/db.js";
 
-const uploadPdfService = (file: Express.Multer.File) => {
+const uploadPdfService = async (file: Express.Multer.File) => {
+  const result = await pool.query(
+    `
+      INSERT INTO resume (
+        id,
+        original_name,
+        updated_at
+      )
+      VALUES (
+        1,
+        $1,
+        CURRENT_TIMESTAMP
+      )
+
+      ON CONFLICT (id)
+      DO UPDATE SET
+        original_name = EXCLUDED.original_name,
+        updated_at = CURRENT_TIMESTAMP
+
+      RETURNING
+        original_name,
+        updated_at
+    `,
+    [file.originalname],
+  );
+
+  const resume = result.rows[0];
+
   return {
     filename: file.filename,
-    originalName: file.originalname,
+    originalName: resume.original_name,
     size: file.size,
     url: "/uploads/pdfs/resume.pdf",
+    updatedAt: resume.updated_at,
   };
 };
 
@@ -38,42 +66,35 @@ const deleteProjectImageService = async (imageUrl: string) => {
   }
 };
 
-const deleteProjectService = async (id: number) => {
-  const result = await pool.query(
-    `
-      DELETE FROM projects
-      WHERE id = $1
-      RETURNING *
-    `,
-    [id],
-  );
+const getResumeService = async () => {
+  const result = await pool.query(`
+    SELECT
+      original_name,
+      updated_at
+    FROM resume
+    WHERE id = 1
+  `);
 
-  return result.rows[0];
-};
+  const resume = result.rows[0];
 
-const addProjectTechnologiesService = async (
-  projectId: number,
-  technologyIds: number[],
-) => {
-  for (const technologyId of technologyIds) {
-    await pool.query(
-      `
-        INSERT INTO project_technologies (
-          project_id,
-          technology_id
-        )
-        VALUES ($1, $2)
-        ON CONFLICT DO NOTHING
-      `,
-      [projectId, technologyId],
-    );
+  if (!resume) {
+    return undefined;
   }
+
+  const filePath = path.resolve("uploads", "pdfs", "resume.pdf");
+
+  try {
+    await access(filePath);
+  } catch {
+    return undefined;
+  }
+
+  return resume;
 };
 
 export {
   uploadPdfService,
   uploadProjectImageService,
   deleteProjectImageService,
-  deleteProjectService,
-  addProjectTechnologiesService
+  getResumeService,
 };
