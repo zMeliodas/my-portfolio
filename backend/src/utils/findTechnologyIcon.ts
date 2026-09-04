@@ -1,23 +1,53 @@
 import * as icons from "simple-icons";
+
 import type { SimpleIcon } from "simple-icons";
 
-const normalize = (value: string) => {
-  return value
-    .toLowerCase()
-    .replace(/[^a-z0-9]/g, "");
+const normalizeName = (value: string) => {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, "");
 };
 
-export const findTechnologyIcon = (
+const findTechnologyIcon = (
   name: string,
-): SimpleIcon | undefined => {
-  const normalizedName = normalize(name);
+):
+  | {
+      slug: string;
+      hex: string;
+    }
+  | undefined => {
+  const normalizedName = normalizeName(name);
 
-  return Object.values(icons).find((icon) => {
-    const simpleIcon = icon as SimpleIcon;
+  // Devicon fallback
+  if (normalizedName === "java") {
+    return {
+      slug: "java",
+      hex: "F89820",
+    };
+  }
+
+  const icon = Object.values(icons).find((value): value is SimpleIcon => {
+    if (
+      typeof value !== "object" ||
+      value === null ||
+      !("title" in value) ||
+      !("slug" in value)
+    ) {
+      return false;
+    }
 
     return (
-      normalize(simpleIcon.title) === normalizedName ||
-      normalize(simpleIcon.slug) === normalizedName
+      normalizeName(value.title) === normalizedName ||
+      normalizeName(value.slug) === normalizedName
     );
-  }) as SimpleIcon | undefined;
+  });
+
+  if (!icon) {
+    return undefined;
+  }
+
+  return {
+    slug: icon.slug,
+    hex: icon.hex,
+  };
 };
+
+export { findTechnologyIcon };

@@ -1,79 +1,29 @@
 import { useEffect, useState } from "react";
 import TechCard from "@/components/TechCard";
-
-import {
-  SiJavascript,
-  SiReact,
-  SiTypescript,
-  SiExpress,
-  SiPostgresql,
-  SiTailwindcss,
-  SiSupabase,
-} from "react-icons/si";
-
-import {
-  siJavascript,
-  siReact,
-  siTypescript,
-  siExpress,
-  siPostgresql,
-  siTailwindcss,
-  siSupabase,
-} from "simple-icons";
+import { getTechnologies } from "../services/technology.service";
 import type { Technology } from "@/types";
-
-const iconMap = {
-  SiReact: {
-    Icon: SiReact,
-    color: `#${siReact.hex}`,
-  },
-
-  SiTypescript: {
-    Icon: SiTypescript,
-    color: `#${siTypescript.hex}`,
-  },
-
-  SiExpress: {
-    Icon: SiExpress,
-    color: `#${siExpress.hex}`,
-  },
-
-  SiPostgresql: {
-    Icon: SiPostgresql,
-    color: `#${siPostgresql.hex}`,
-  },
-
-  SiTailwindcss: {
-    Icon: SiTailwindcss,
-    color: `#${siTailwindcss.hex}`,
-  },
-
-  SiSupabase: {
-    Icon: SiSupabase,
-    color: `#${siSupabase.hex}`,
-  },
-
-  SiJavascript: {
-    Icon: SiJavascript,
-    color: `#${siJavascript.hex}`,
-  },
-};
 
 const TechStack = () => {
   const [techs, setTechs] = useState<Technology[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState("");
 
   useEffect(() => {
-    const getTechnologies = async () => {
-      const response = await fetch(
-        `${import.meta.env.VITE_API_URL}/technologies`,
-      );
+    const fetchTechnologies = async () => {
+      try {
+        const data = await getTechnologies();
 
-      const data = await response.json();
-
-      setTechs(data.result);
+        setTechs(data);
+      } catch (error) {
+        if (error instanceof Error) {
+          setError(error.message);
+        }
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    getTechnologies();
+    fetchTechnologies();
   }, []);
 
   return (
@@ -89,25 +39,30 @@ const TechStack = () => {
         </p>
       </div>
 
-      <div className="grid w-full gap-4 grid-cols-[repeat(auto-fill,160px)] pb-8 mt-8 px-4 xl:px-24">
-        {techs.map((tech) => {
-          const iconData = iconMap[tech.icon_key as keyof typeof iconMap];
+      {isLoading && (
+        <p className="text-white/60 font-mono px-8 xl:px-24 mt-8">
+          Loading technologies...
+        </p>
+      )}
 
-          if (!iconData) return null;
+      {error && (
+        <p className="text-red-400 font-mono px-8 xl:px-24 mt-8">
+          {error}
+        </p>
+      )}
 
-          const Icon = iconData.Icon;
-
-          return (
+      {!isLoading && !error && (
+        <div className="grid w-full gap-4 grid-cols-[repeat(auto-fill,160px)] pb-8 mt-8 px-4 xl:px-24">
+          {techs.map((tech) => (
             <TechCard
               key={tech.id}
-              icon={
-                <Icon className="w-8 h-8" style={{ color: iconData.color }} />
-              }
               name={tech.name}
+              iconSlug={tech.icon_slug}
+              iconHex={tech.icon_hex}
             />
-          );
-        })}
-      </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

@@ -40,15 +40,57 @@ export type CardTypes = {
 };
 
 export type TechCardProps = {
-  icon: ReactNode;
   name: string;
+  iconSlug: string;
+  iconHex: string;
 };
 
 export type Technology = {
   id: number;
   name: string;
-  icon_key: string;
+  icon_slug: string;
+  icon_hex: string;
   sort_order: number;
+  created_at: string;
+  updated_at: string;
+};
+
+export type TechnologyResponse = {
+  message: string;
+  result: Technology;
+};
+
+export type TechnologiesResponse = {
+  message: string;
+  result: Technology[];
+};
+
+export type ProjectTechnology = {
+  id: number;
+  name: string;
+};
+
+export type Project = {
+  id: number;
+  title: string;
+  description: string;
+  image_url: string;
+  live_link: string | null;
+  github_link: string | null;
+  sort_order: number;
+  created_at: string;
+  updated_at: string;
+  techStack: ProjectTechnology[];
+};
+
+export type ProjectsResponse = {
+  message: string;
+  result: Project[];
+};
+
+export type ProjectResponse = {
+  message: string;
+  result: Project;
 };
 
 export type Admin = {
