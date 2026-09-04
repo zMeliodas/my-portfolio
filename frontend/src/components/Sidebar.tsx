@@ -58,12 +58,16 @@ const Sidebar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-  const handleProfileClick = () => {
+  const handleSettingsClick = () => {
     if (!isLoggedIn) {
       navigate("/admin/login");
       return;
     }
     setShowProfileMenu((prev) => !prev);
+  };
+
+  const handleProfileClick = () => {
+    navigate("/admin");
   };
 
   const handleLogout = async () => {
@@ -89,13 +93,11 @@ const Sidebar = () => {
       </div>
 
       <div className="flex flex-col-reverse items-center gap-2">
-        <SidebarButton icon={IoMdSettings} isBottom={true} />
-
         <div className="relative" ref={menuRef}>
           <SidebarButton
-            icon={CgProfile}
+            icon={IoMdSettings}
             isBottom={true}
-            onClick={handleProfileClick}
+            onClick={handleSettingsClick}
           />
 
           {isLoggedIn && showProfileMenu && (
@@ -110,6 +112,12 @@ const Sidebar = () => {
             </div>
           )}
         </div>
+
+        <SidebarButton
+          icon={CgProfile}
+          isBottom={true}
+          onClick={handleProfileClick}
+        />
       </div>
     </div>
   );
