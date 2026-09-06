@@ -12,6 +12,7 @@ import {
 import { getTechnologies } from "@/services/technology.service";
 
 import type { Project, Technology } from "@/types";
+import { getTechnologyIconUrl } from "@/utils/getTechnologyIconUrl";
 
 const SERVER_URL = import.meta.env.VITE_SERVER_URL;
 
@@ -415,7 +416,11 @@ const ProjectCards = () => {
                       }`}
                     >
                       <img
-                        src={`https://cdn.simpleicons.org/${technology.icon_slug}/${technology.icon_hex}`}
+                        src={getTechnologyIconUrl(
+                          technology.name,
+                          technology.icon_slug,
+                          technology.icon_hex,
+                        )}
                         alt={`${technology.name} icon`}
                         className="w-4 h-4"
                       />
