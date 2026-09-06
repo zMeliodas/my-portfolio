@@ -12,6 +12,7 @@ import TechStack from "./Pages/TechStack";
 import Admin from "./admin/Pages/Admin";
 import Login from "./admin/Pages/Login";
 import ProtectedRoute from "./auth/ProtectedRoute";
+import NotFound from "./Pages/NotFound";
 
 const App = () => {
   return (
@@ -35,6 +36,7 @@ const App = () => {
                 <Route path="/contacts" element={<Contacts />} />
                 <Route path="/techstack" element={<TechStack />} />
                 <Route path="/admin/login" element={<Login />} />
+                <Route path="*" element={<NotFound />} />
 
                 <Route element={<ProtectedRoute />}>
                   <Route path="/admin" element={<Admin />} />
