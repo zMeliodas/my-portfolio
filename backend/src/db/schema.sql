@@ -7,7 +7,10 @@ CREATE TABLE IF NOT EXISTS projects (
   github_link TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT projects_sort_order_check
+    CHECK (sort_order >= 0)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS projects_title_unique
@@ -21,7 +24,13 @@ CREATE TABLE IF NOT EXISTS technologies (
   icon_hex VARCHAR(6) NOT NULL,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+
+  CONSTRAINT technologies_sort_order_check
+    CHECK (sort_order >= 0),
+
+  CONSTRAINT technologies_icon_hex_check
+    CHECK (icon_hex ~ '^[0-9A-Fa-f]{6}$')
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS technologies_name_unique
@@ -54,5 +63,6 @@ CREATE TABLE IF NOT EXISTS resume (
   original_name TEXT NOT NULL,
   updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 
-  CONSTRAINT single_resume CHECK (id = 1)
+  CONSTRAINT single_resume
+    CHECK (id = 1)
 );
